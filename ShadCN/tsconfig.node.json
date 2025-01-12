@@ -1,0 +1,9 @@
+{
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+      "module": "commonjs",
+      "target": "node18"
+    },
+    "include": ["src/server/**/*.ts", "src/server/**/*.tsx"], // Include only server-side files
+    "exclude": ["**/*.spec.ts", "**/*.test.ts"] // Exclude test files
+  }
