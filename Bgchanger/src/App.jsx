@@ -20,7 +20,7 @@ function App() {
           <button className='outline-none px-4 py-1 rounded-full text-white shadow-lg'
           style={{backgroundColor:"yellow"}} onClick={changeColor}>Yellow</button>
           <button className='outline-none px-4 py-1 rounded-full text-white shadow-lg'
-          style={{backgroundColor:"purple"}} onClick={changeColor}>Purple</button>
+          style={{backgroundColor:"purple"}} onClick={()=>setColor("purple")}>Purple</button>
 
         </div>
 
