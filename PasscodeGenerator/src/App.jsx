@@ -27,6 +27,9 @@ function App() {
     setPassword(pass);
   }, [length, numberAllowed, charAllowed, setPassword]);
   useEffect(()=>{
+    //useEffect will run only when the dependency value changes
+    //if the dependency value is empty it will run only once
+    //if the dependency value is not empty it will run when the dependency value changes   
     passwordGenerator()
   },[length,numberAllowed,charAllowed,passwordGenerator])
 const copyPasstoClipboard=useCallback(()=>{
