@@ -1,8 +1,41 @@
-# React + Vite
+import { createContext, useContext } from 'react';
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+const ThemeContext = createContext(null);
 
-Currently, two official plugins are available:
+export default function MyApp() {
+  return (
+    <ThemeContext.Provider value="dark">
+      <Form />
+    </ThemeContext.Provider>
+  )
+}
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+function Form() {
+  return (
+    <Panel title="Welcome">
+      <Button>Sign up</Button>
+      <Button>Log in</Button>
+    </Panel>
+  );
+}
+
+function Panel({ title, children }) {
+  const theme = useContext(ThemeContext);
+  const className = 'panel-' + theme;
+  return (
+    <section className={className}>
+      <h1>{title}</h1>
+      {children}
+    </section>
+  )
+}
+
+function Button({ children }) {
+  const theme = useContext(ThemeContext);
+  const className = 'button-' + theme;
+  return (
+    <button className={className}>
+      {children}
+    </button>
+  );
+}
