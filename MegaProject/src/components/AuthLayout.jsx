@@ -1,23 +1,23 @@
-import React,{useEffect,useState} from 'react'
-import {useSelector} from 'react-redux'
-import {useNavigate} from 'react-router-dom'
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
-export default function Protected({children,
-    authentication=true
-}) {
-    const navigate=useNavigate();
-    const [loader,setLoader]=useState(true);
-    const authStatus=useSelector(state=>state.auth.status);
-    useEffect(()=>{
+export default function Protected({ children, authentication = true }) {
+    const navigate = useNavigate();
+    const [loader, setLoader] = useState(true);
+    const authStatus = useSelector(state => state.auth.status);
 
-        if(authentication && authStatus!== authentication ){
-            navigate('/login')
-        }else if(!authentication && authStatus!==authentication){
-            navigate('/')
+    useEffect(() => {
+        console.log("Auth status:", authStatus);
+        if (authentication && !authStatus) {
+            console.log("Redirecting to login");
+            navigate('/login');
+        } else if (!authentication && authStatus) {
+            console.log("Redirecting to home");
+            navigate('/');
         }
-        setLoader(false)
-    },[authStatus,navigate,authentication])
+        setLoader(false);
+    }, [authStatus, navigate, authentication]);
 
-  return loader ? <h1>Loading....</h1> : <>{children}</>
+    return loader ? <h1>Loading....</h1> : <>{children}</>;
 }
-

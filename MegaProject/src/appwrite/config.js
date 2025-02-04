@@ -1,6 +1,6 @@
-import conf from '../conf/conf'
+import conf from '../conf/conf';
 
-import {Client, Account, ID, Databases, Storage, Query} from "appwrite";
+import { Client, ID, Databases, Storage, Query } from "appwrite";
 
 export class Service {
     client = new Client();
@@ -15,7 +15,7 @@ export class Service {
         this.bucket = new Storage(this.client);
     }
 
-    async createPost({title, slug, content, featuredImage, status, userId}) {
+    async createPost({ title, slug, content, featuresImage, status, userId }) {
         try {
             return await this.databases.createDocument(conf.appwriteDatabaseId,
                 conf.appwriteCollectionId,
@@ -23,17 +23,17 @@ export class Service {
                 {
                     title,
                     content,
-                    featuredImage,
+                    featuresImage,
                     status,
                     userId,
                 }
-            )
+            );
         } catch (error) {
             throw error;
         }
     }
 
-    async updatePost(slug, {title, content, featuredImage, status}) {
+    async updatePost(slug, { title, content, featuresImage, status }) {
         try {
             return await this.databases.updateDocument(conf.appwriteDatabaseId,
                 conf.appwriteCollectionId,
@@ -41,10 +41,10 @@ export class Service {
                 {
                     title,
                     content,
-                    featuredImage,
+                    featuresImage,
                     status,
                 }
-            )
+            );
         } catch (error) {
             throw error;
         }
@@ -55,7 +55,7 @@ export class Service {
             await this.databases.deleteDocument(conf.appwriteDatabaseId,
                 conf.appwriteCollectionId,
                 slug
-            )
+            );
             return true;
         } catch (error) {
             throw error;
@@ -68,7 +68,7 @@ export class Service {
             return await this.databases.getDocument(conf.appwriteDatabaseId,
                 conf.appwriteCollectionId,
                 slug
-            )
+            );
         } catch (error) {
             throw error;
             return false;
@@ -85,7 +85,7 @@ export class Service {
                 queries,
                 100,
                 0
-            )
+            );
         } catch (error) {
             throw error;
             return false;
@@ -99,7 +99,7 @@ export class Service {
                 conf.appwriteBucketId,
                 ID.unique(),
                 file,
-            )
+            );
         } catch (error) {
             throw error;
             return false;
@@ -112,7 +112,7 @@ export class Service {
             await this.bucket.deleteFile(
                 conf.appwriteBucketId,
                 fileId
-            )
+            );
             return true;
         } catch (error) {
             throw error;
@@ -121,10 +121,11 @@ export class Service {
     }
 
     getFilePreview(fileId) {
-        return this.bucket.getFilePreview(
+        const previewUrl = this.bucket.getFilePreview(
             conf.appwriteBucketId,
             fileId
-        )
+        );
+        return previewUrl.href; // Return the href of the preview URL
     }
 }
 
