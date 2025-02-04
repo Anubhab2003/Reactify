@@ -18,30 +18,23 @@ function PostForm({ post }) {
 
     const navigate = useNavigate();
     const userData = useSelector((state) => state.auth.userData);
-    
-    // Add logging to ensure userData is correctly fetched
-    console.log("User Data:", userData);
 
     const submit = async (data) => {
         try {
             let fileId;
             if (data.image && data.image.length > 0) {
                 const file = await appwriteService.uploadFile(data.image[0]);
-                fileId = file.$id;
+                fileId = file.$id; // Get the fileId from the response
             }
 
             const requestData = {
                 ...data,
                 userId: userData?.$id,  // Ensure correct userId is included
-                featuredImage: fileId || post?.featuredImage,
+                featuresImage: fileId || post?.featuresImage,
             };
 
-            // Add logging to verify requestData
-            console.log("Request Data:", requestData);
-
-            // Check if userId is correctly included
             if (!requestData.userId) {
-                throw new Error('Missing required attribute "userId"');
+                throw new Error('Missing required attribute "userid"');
             }
 
             if (post) {
@@ -52,7 +45,7 @@ function PostForm({ post }) {
                 }
             } else {
                 if (!fileId) {
-                    throw new Error('Missing required attribute "featuredImage"');
+                    throw new Error('Missing required attribute "featuresImage"');
                 }
 
                 const dbPost = await appwriteService.createPost(requestData);
@@ -119,10 +112,10 @@ function PostForm({ post }) {
                     accept="image/png, image/jpg, image/jpeg, image/gif"
                     {...register('image', { required: !post })}
                 />
-                {post && post.featuredImage && (
+                {post && post.featuresImage && (
                     <div className="w-full mb-4">
                         <img
-                            src={appwriteService.getFilePreview(post.featuredImage)}
+                            src={appwriteService.getFilePreview(post.featuresImage)}
                             alt={post.title}
                             className="rounded-lg"
                         />
@@ -134,7 +127,7 @@ function PostForm({ post }) {
                     className="mb-4"
                     {...register('status', { required: true })}
                 />
-                <Button type="submit" className="w-full" text={post ? 'Update' : 'Submit'} />
+                <Button type="submit" className="w-full bg-blue-600" text={post ? 'Update' : 'Submit'} />
             </div>
         </form>
     );

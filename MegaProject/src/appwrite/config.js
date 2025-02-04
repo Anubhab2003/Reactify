@@ -1,5 +1,4 @@
 import conf from '../conf/conf';
-
 import { Client, ID, Databases, Storage, Query } from "appwrite";
 
 export class Service {
@@ -76,7 +75,6 @@ export class Service {
     }
 
     async getPosts(queries = [
-        // You need to have Indexed to use query
         Query.equal("status", "active")
     ]) {
         try {
@@ -92,7 +90,6 @@ export class Service {
         }
     }
 
-    // file upload services
     async uploadFile(file) {
         try {
             return await this.bucket.createFile(
@@ -106,7 +103,6 @@ export class Service {
         }
     }
 
-    // File delete services
     async deleteFile(fileId) {
         try {
             await this.bucket.deleteFile(
@@ -121,6 +117,10 @@ export class Service {
     }
 
     getFilePreview(fileId) {
+        if (!fileId) {
+            // throw new Error('Missing required parameter: "fileId"');
+            return null;
+        }
         const previewUrl = this.bucket.getFilePreview(
             conf.appwriteBucketId,
             fileId

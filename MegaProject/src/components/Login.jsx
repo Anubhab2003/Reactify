@@ -71,7 +71,8 @@ function Login() {
                         <Button
                             text="SignIn"
                             type="submit"
-                            className="w-full"
+                            className="w-full bg-blue-600"
+
                         />
                     </div>
                 </form>

@@ -8,7 +8,7 @@ function EditPost() {
     const navigate=useNavigate()
 
     useEffect(()=>{
-        if(sluf){
+        if(slug){
             appwriteService.getPost(slug).then((post)=>{
                 if(post){
                     setPost(post)
