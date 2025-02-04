@@ -117,6 +117,7 @@ export class Service {
     }
 
     getFilePreview(fileId) {
+        console.log(fileId);
         if (!fileId) {
             throw new Error('Missing required parameter: "fileId"');
         }
